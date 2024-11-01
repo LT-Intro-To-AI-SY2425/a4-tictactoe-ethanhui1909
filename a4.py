@@ -9,8 +9,43 @@ class TTTBoard:
         board - a list of '*'s, 'X's & 'O's. 'X's represent moves by player 'X', 'O's
             represent moves by player 'O' and '*'s are spots no one has yet played on
     """
+    def __init__(self):
+        self.board = ["*","*","*","*","*","*","*","*","*"]
 
-    pass
+    def __str__(self) -> str:
+        return f"{self.board[0]} {self.board[1]} {self.board[2]}\n{self.board[3]} {self.board[4]} {self.board[5]}\n{self.board[6]} {self.board[7]} {self.board[8]}"
+    
+    def make_move(self, player, pos) -> bool:
+        if self.board[pos] == "*":
+            self.board[pos] = player
+            return True   
+        return False
+
+    def has_won(self, player) -> bool:
+        for x in range(0,7,3):
+            if self.board[x] == player and self.board[x+1] == player and self.board[x+2] == player:
+                return True
+        for x in range(0,3):
+            if self.board[x] == player and self.board[x+3] == player and self.board[x+6] == player:
+                return True
+        if self.board[0] == player and self.board[4] == player and self.board[8] == player:
+            return True
+        if self.board[6] == player and self.board[4] == player and self.board[2] == player:
+            return True
+        return False
+    
+    def game_over(self) -> bool:
+        if self.has_won("X"):
+            return True
+        if self.has_won("O"):
+            return True
+        for x in self.board:
+            if x == "*":
+                return False
+        return True
+
+    def clear(self):
+        self.board = ["*","*","*","*","*","*","*","*","*"]
 
 
 def play_tic_tac_toe() -> None:
@@ -89,4 +124,4 @@ if __name__ == "__main__":
     print("All tests passed!")
 
     # uncomment to play!
-    # play_tic_tac_toe()
+    play_tic_tac_toe()
